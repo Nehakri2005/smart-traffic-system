@@ -61,7 +61,7 @@ function checkViolation() {
         emergency: document.getElementById("emergency").checked
     };
 
-    fetch('http://localhost:8081/api/check', {
+    fetch('/api/check', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
