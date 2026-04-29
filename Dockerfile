@@ -2,8 +2,11 @@ FROM eclipse-temurin:17-jdk
 
 WORKDIR /app
 
-COPY target/smarttrafficsystem-0.0.1-SNAPSHOT.jar app.jar
+# Copy full project
+COPY . .
 
-EXPOSE 8080
+# Build the project
+RUN chmod +x mvnw && ./mvnw clean package -DskipTests
 
-ENTRYPOINT ["java","-jar","app.jar"]
+# Run the jar
+CMD ["java", "-jar", "target/smarttrafficsystem-0.0.1-SNAPSHOT.jar"]
