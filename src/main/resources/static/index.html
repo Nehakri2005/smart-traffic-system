@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Smart Traffic Dashboard</title>
+    <style>
+        body {
+            font-family: Arial;
+            background: #f4f6f9;
+            text-align: center;
+        }
+        .card {
+            background: white;
+            padding: 20px;
+            margin: 50px auto;
+            width: 350px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px gray;
+        }
+        input, button {
+            margin: 10px;
+            padding: 10px;
+            width: 90%;
+        }
+        button {
+            background: #2196F3;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        #result {
+            margin-top: 15px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="card">
+    <h2>🚦 Smart Traffic System</h2>
+
+    <input type="text" id="vehicleId" placeholder="Vehicle ID">
+    <input type="number" id="speed" placeholder="Speed">
+    <input type="text" id="zone" placeholder="Zone">
+
+    <label>
+        <input type="checkbox" id="emergency"> Emergency Vehicle
+    </label>
+
+    <button onclick="checkViolation()">Check Violation</button>
+
+    <div id="result"></div>
+</div>
+
+<script>
+function checkViolation() {
+    const data = {
+        vehicleId: document.getElementById("vehicleId").value,
+        speed: parseInt(document.getElementById("speed").value),
+        zone: document.getElementById("zone").value,
+        emergency: document.getElementById("emergency").checked
+    };
+
+    fetch('http://localhost:8081/api/check', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    })
+    .then(res => res.text())
+    .then(result => {
+        document.getElementById("result").innerText = result;
+    })
+    .catch(err => {
+        document.getElementById("result").innerText = "Error connecting server";
+    });
+}
+</script>
+
+</body>
+</html>
